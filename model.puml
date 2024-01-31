@@ -1,0 +1,53 @@
+@startuml
+hide circle
+skinparam linetype ortho
+
+entity "**guids**" {
+  + ""guid"": //character varying [PK]//
+  --
+  *""thing_id"": //integer [FK]//
+  ""properties"": //jsonb //
+}
+
+entity "**relations**" {
+  + ""src"": //character varying [PK][FK]//
+  + ""dst"": //character varying [PK][FK]//
+  + ""predicate"": //character varying [PK]//
+  --
+  ""properties"": //jsonb //
+}
+
+entity "**terms**" {
+  + ""id"": //serial [PK]//
+  --
+  *""uri"": //character varying //
+  *""scheme"": //character varying //
+  ""name"": //character varying //
+  ""broader"": //character varying[] //
+  ""related"": //character varying[] //
+  ""properties"": //jsonb //
+}
+
+entity "**things**" {
+  + ""id"": //serial [PK]//
+  --
+  ""ttype"": //character varying //
+  ""properties"": //jsonb //
+}
+
+entity "**things_terms**" {
+  + ""things_id"": //integer [PK][FK]//
+  + ""terms_id"": //integer [PK][FK]//
+  --
+}
+
+"**guids**"   }--  "**things**"
+
+"**relations**"   }--  "**guids**"
+
+"**relations**"   }--  "**guids**"
+
+"**things_terms**"   }--  "**terms**"
+
+"**things_terms**"   }--  "**things**"
+@enduml
